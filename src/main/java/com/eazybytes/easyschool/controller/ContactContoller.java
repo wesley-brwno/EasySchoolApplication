@@ -2,19 +2,16 @@ package com.eazybytes.easyschool.controller;
 
 import com.eazybytes.easyschool.model.Contact;
 import com.eazybytes.easyschool.service.ContactService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+@Slf4j
 @Controller
 public class ContactContoller {
-
-    private static Logger log = LoggerFactory.getLogger(ContactContoller.class);
-
     private final ContactService contactService;
 
     @Autowired
