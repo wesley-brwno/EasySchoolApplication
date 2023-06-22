@@ -48,6 +48,8 @@ public class ContactContoller {
             return "contact.html";
         }
         contactService.saveMessageDetails(contact);
+        contactService.setCounter(contactService.getCounter()+1);
+        log.info("Numer of times the Contact form is submitted: " + contactService.getCounter());
         return "redirect:/contact";
     }
 }
