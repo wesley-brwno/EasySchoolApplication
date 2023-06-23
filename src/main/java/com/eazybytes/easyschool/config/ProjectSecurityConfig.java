@@ -33,7 +33,7 @@ public class ProjectSecurityConfig {
                 .requestMatchers("/about").permitAll()
                 .requestMatchers("/assets/**").permitAll()
                 .anyRequest().authenticated());
-
+        http.csrf().disable();
         http.formLogin(withDefaults());
         http.httpBasic(withDefaults());
 
