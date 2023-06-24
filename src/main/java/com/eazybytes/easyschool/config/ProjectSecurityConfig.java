@@ -1,5 +1,6 @@
 package com.eazybytes.easyschool.config;
 
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -37,13 +38,17 @@ public class ProjectSecurityConfig {
                 .requestMatchers("/assets/**").permitAll()
                 .requestMatchers("/login").permitAll()
                 .requestMatchers("/logout").permitAll()
+                .requestMatchers(PathRequest.toH2Console()).permitAll()
                 .requestMatchers("/dashboard").authenticated()
                 .anyRequest().authenticated());
-        http.csrf().ignoringRequestMatchers("/saveMsg");
+        http.csrf().ignoringRequestMatchers("/saveMsg")
+                .ignoringRequestMatchers(PathRequest.toH2Console());
         http.formLogin().loginPage("/login")
                 .defaultSuccessUrl("/dashboard").failureUrl("/login?error=true").permitAll()
                 .and().logout().logoutSuccessUrl("/login?logout=true").invalidateHttpSession(true).permitAll();
         http.httpBasic(withDefaults());
+
+        http.headers().frameOptions().disable();
 
         return http.build();
     }
