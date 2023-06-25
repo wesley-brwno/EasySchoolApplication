@@ -1,4 +1,4 @@
-package com.eazybytes.easyschool.constants;
+package com.eazybytes.eazyschool.constants;
 
 public interface EasySchoolConstants {
     String ANONYMOUS = "anonymous";

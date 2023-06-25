@@ -1,14 +1,14 @@
-package com.eazybytes.easyschool.service;
+package com.eazybytes.eazyschool.service;
 
-import com.eazybytes.easyschool.constants.EasySchoolConstants;
-import com.eazybytes.easyschool.model.Contact;
-import com.eazybytes.easyschool.repository.ContactRepository;
+import com.eazybytes.eazyschool.constants.EasySchoolConstants;
+import com.eazybytes.eazyschool.model.Contact;
+import com.eazybytes.eazyschool.repository.ContactRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.annotation.ApplicationScope;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -34,5 +34,19 @@ public class ContactService {
             isSaved = true;
         }
         return isSaved;
+    }
+
+    public List<Contact> findMsgsWithOpenStatus() {
+        List<Contact> contactMsgs = contactRepository.findMsgsWithStatus(EasySchoolConstants.OPEN);
+        return contactMsgs;
+    }
+
+    public boolean updateMsgStatus(int contactId, String updatedBy) {
+        boolean isUpdated = false;
+        int result = contactRepository.updateMsgStatus(contactId, EasySchoolConstants.CLOSE, updatedBy);
+        if (result > 0) {
+            isUpdated = true;
+        }
+        return isUpdated;
     }
 }

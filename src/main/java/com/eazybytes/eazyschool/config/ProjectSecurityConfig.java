@@ -1,4 +1,4 @@
-package com.eazybytes.easyschool.config;
+package com.eazybytes.eazyschool.config;
 
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -33,6 +33,8 @@ public class ProjectSecurityConfig {
                 .requestMatchers("/contact").permitAll()
                 .requestMatchers("/saveMsg").permitAll()
                 .requestMatchers("/courses").permitAll()
+                .requestMatchers("/displayMessages").hasRole("ADMIN")
+                .requestMatchers("/closeMsg/**").hasRole("ADMIN")
                 //.requestMatchers("/courses").authenticated()
                 .requestMatchers("/about").permitAll()
                 .requestMatchers("/assets/**").permitAll()
@@ -63,7 +65,7 @@ public class ProjectSecurityConfig {
         UserDetails admin = User.withDefaultPasswordEncoder()
                 .username("admin")
                 .password("54321")
-                .roles("USER", "ADMIN")
+                .roles("ADMIN")
                 .build();
         return new InMemoryUserDetailsManager(user, admin);
     }

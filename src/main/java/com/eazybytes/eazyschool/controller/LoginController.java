@@ -1,4 +1,4 @@
-package com.eazybytes.easyschool.controller;
+package com.eazybytes.eazyschool.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

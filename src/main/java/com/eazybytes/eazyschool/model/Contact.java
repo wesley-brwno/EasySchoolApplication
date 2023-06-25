@@ -1,4 +1,4 @@
-package com.eazybytes.easyschool.model;
+package com.eazybytes.eazyschool.model;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
