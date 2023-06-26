@@ -29,8 +29,8 @@ public class ContactService {
         contact.setStatus(EasySchoolConstants.OPEN);
         contact.setCreatedBy(EasySchoolConstants.ANONYMOUS);
         contact.setCreatedAt(LocalDateTime.now());
-        int result = contactRepository.saveContacMsg(contact);
-        if (result > 0) {
+        Contact savedContact = contactRepository.save(contact);
+        if (savedContact.getContactId() > 0) {
             isSaved = true;
         }
         return isSaved;
