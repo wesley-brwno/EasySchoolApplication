@@ -10,7 +10,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Data
 @Entity
-@Table(name = "contact_msg")
+@Table(name="contact_msg")
 
 public class Contact extends BaseEntity{
 
