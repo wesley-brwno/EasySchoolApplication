@@ -27,8 +27,8 @@ public class ContactService {
 
     public boolean saveMessageDetails(Contact contact) {
         boolean isSaved = false;
-        contact.setStatus(EasySchoolConstants.OPEN);
-        contact.setCreatedBy(EasySchoolConstants.ANONYMOUS);
+        contact.setStatus(EasySchoolConstants.OPEN); //será feito pelo JPA
+        //contact.setCreatedBy(EasySchoolConstants.ANONYMOUS);
         contact.setCreatedAt(LocalDateTime.now());
         Contact savedContact = contactRepository.save(contact);
         if (savedContact.getContactId() > 0) {
@@ -42,13 +42,14 @@ public class ContactService {
         return contactMsgs;
     }
 
-    public boolean updateMsgStatus(int contactId, String updatedBy) {
+   // public boolean updateMsgStatus(int contactId, String updatedBy ) {
+    public boolean updateMsgStatus(int contactId) {
         boolean isUpdated = false;
         Optional<Contact> contact = contactRepository.findById(contactId);
         contact.ifPresent(contact1 -> {
             contact1.setStatus(EasySchoolConstants.CLOSE);
-            contact1.setUpdatedBy(updatedBy);
-            contact1.setUpdatedAt(LocalDateTime.now());
+            //contact1.setUpdatedBy(updatedBy); será feito pelo JPA
+            //contact1.setUpdatedAt(LocalDateTime.now());
         });
         Contact updatedContact = contactRepository.save(contact.get());
         if (updatedContact.getUpdatedBy() != null) {
