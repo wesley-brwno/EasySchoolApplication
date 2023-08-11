@@ -1,7 +1,9 @@
 package com.eazybytes.eazyschool.controller;
 
+import com.eazybytes.eazyschool.model.Courses;
 import com.eazybytes.eazyschool.model.EazyClass;
 import com.eazybytes.eazyschool.model.Person;
+import com.eazybytes.eazyschool.repository.CourseRepository;
 import com.eazybytes.eazyschool.repository.EazyClassRepository;
 import com.eazybytes.eazyschool.repository.PersonRepository;
 import jakarta.servlet.http.HttpSession;
@@ -19,6 +21,8 @@ import java.util.Optional;
 @Controller
 @RequestMapping("admin")
 public class AdminContoller {
+    @Autowired
+    CourseRepository courseRepository;
     @Autowired
     EazyClassRepository eazyClassRepository;
     @Autowired
@@ -94,5 +98,69 @@ public class AdminContoller {
         session.setAttribute("eazyClass", eazyClass1);
         ModelAndView modelAndView = new ModelAndView("redirect:/admin/displayStudents?classId="+eazyClass.getClassId());
         return modelAndView;
+    }
+
+    @GetMapping("/displayCourses")
+    public ModelAndView displayCourses(Model model) {
+        List<Courses> courses = courseRepository.findAll();
+        ModelAndView modelAndView = new ModelAndView("courses_secure.html");
+        modelAndView.addObject("courses", courses);
+        modelAndView.addObject("course", new Courses());
+        return modelAndView;
+    }
+
+    @PostMapping("/addNewCourse")
+    public ModelAndView addNewCourse(Model model, @ModelAttribute("course") Courses course) {
+        ModelAndView modelAndView = new ModelAndView();
+        courseRepository.save(course);
+        modelAndView.setViewName("redirect:/admin/displayCourses");
+        return modelAndView;
+    }
+
+    @GetMapping("viewStudents")
+    public ModelAndView viewStudents(Model model, @RequestParam int id, HttpSession session,
+                                     @RequestParam(required = false) String error) {
+        String errorMessage = null;
+        ModelAndView modelAndView = new ModelAndView("course_students.html");
+        Optional<Courses> courses = courseRepository.findById(id);
+        modelAndView.addObject("courses", courses.get());
+        modelAndView.addObject("person", new Person());
+        session.setAttribute("courses", courses.get());
+        if (error != null) {
+            errorMessage = "Invalid Email entered!!";
+            modelAndView.addObject("errorMessage", errorMessage);
+        }
+        return modelAndView;
+    }
+
+    @PostMapping("/addStudentToCourse")
+    public ModelAndView addStudentToCouse(Model model, @ModelAttribute("person") Person person, HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView();
+        Courses courses = (Courses) session.getAttribute("courses");
+        Person personEntenty = personRepository.readByEmail(person.getEmail());
+        if(personEntenty == null || !(personEntenty.getPersonId() > 0)) {
+            modelAndView.setViewName("redirect:/admin/viewStudents?id="+courses.getCourseId()+
+                    "&error=true");
+            System.err.println(courses.toString()+" Houve um eror ao adiconar estudante em curso");
+            return modelAndView;
+        }
+        personEntenty.getCourses().add(courses);
+        courses.getPersons().add(personEntenty);
+        personRepository.save(personEntenty);
+        session.setAttribute("courses", courses);
+        System.err.println(courses.toString());
+        modelAndView.setViewName("redirect:/admin/viewStudents?id="+courses.getCourseId());
+        return modelAndView;
+    }
+
+    @GetMapping("/deleteStudentFromCourse")
+    public ModelAndView deleteStudentFromCouse(Model model, @RequestParam int personId,
+                                               HttpSession session) {
+        Courses courses = (Courses) session.getAttribute("courses");
+        Optional<Person> person = personRepository.findById(personId);
+        person.get().getCourses().remove(courses);
+        personRepository.save(person.get());
+        session.setAttribute("courses", courses);
+        return new ModelAndView("redirect:/admin/viewStudents?id="+courses.getCourseId());
     }
 }
