@@ -6,13 +6,41 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
-@Data
-@Entity
-@Table(name="contact_msg")
 
-public class Contact extends BaseEntity{
+@Getter
+@Setter
+@Entity
+@Table(name = "contact_msg")
+@SqlResultSetMappings({
+        @SqlResultSetMapping(name = "SqlResultSetMapping.count", columns = @ColumnResult(name = "cnt"))
+})
+@NamedQueries({
+        @NamedQuery(name = "Contact.findOpenMsgs",
+                query = "SELECT c FROM Contact c WHERE c.status = :status"),
+        @NamedQuery(name = "Contact.updateMsgsStatus",
+                query = "UPDATE Contact c SET c.status = ?1 WHERE c.contactId = ?2")
+})
+
+@NamedNativeQueries({
+        @NamedNativeQuery(name = "Contact.findOpenMsgsNative",
+                query = "SELECT * FROM contact_msg c WHERE c.status = :status",
+                resultClass = Contact.class),
+        @NamedNativeQuery(name = "Contact.findOpenMsgsNative.count",
+                query = "SELECT count(*) AS cnt FROM contact_msg c WHERE c.status = :status",
+                resultSetMapping = "SqlResultSetMapping.count"),
+        /* Spring Data JPA doesn't support dynamic sortig for native queries.
+        Doing that would require Spring Data to analyze the provide statement and generate
+        the ORDER BY clause n the database-specific dialect. This would be a very complex operation
+        and is currently not supported by Spring Data JPA.
+        */
+        @NamedNativeQuery(name = "Contact.updateMsgsStatusNative",
+                query = "UPDATE contact_msg c SET c.status = ?1 WHERE c.contact_id = ?2")
+})
+public class Contact extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
