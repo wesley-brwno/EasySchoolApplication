@@ -36,6 +36,7 @@ public class ProjectSecurityConfig {
                 .requestMatchers("/saveMsg").permitAll()
                 .requestMatchers("/courses").permitAll()
                 .requestMatchers("/displayMessages/**").hasRole("ADMIN")
+                .requestMatchers("/api/**").authenticated()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/closeMsg/**").hasRole("ADMIN")
                 .requestMatchers("/displayProfile").authenticated()
@@ -49,7 +50,8 @@ public class ProjectSecurityConfig {
                 .requestMatchers("public/**").permitAll()
                 .requestMatchers("/dashboard").authenticated()
                 .anyRequest().authenticated());
-        http.csrf().ignoringRequestMatchers("/saveMsg").ignoringRequestMatchers("*/public/**");
+        http.csrf().ignoringRequestMatchers("/saveMsg").ignoringRequestMatchers("*/public/**")
+                .ignoringRequestMatchers("/api/**");
         http.formLogin().loginPage("/login")
                 .defaultSuccessUrl("/dashboard").failureUrl("/login?error=true").permitAll()
                 .and().logout().logoutSuccessUrl("/login?logout=true").invalidateHttpSession(true).permitAll();
