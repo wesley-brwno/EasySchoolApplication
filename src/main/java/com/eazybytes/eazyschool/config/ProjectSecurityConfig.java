@@ -32,11 +32,16 @@ public class ProjectSecurityConfig {
         http.authorizeHttpRequests((requests) -> requests
                 .requestMatchers("", "/", "/home").permitAll()
                 .requestMatchers("/holidays/**").permitAll()
+                /*.requestMatchers("/profile/**").permitAll()
+                .requestMatchers("courseses/**").permitAll()
+                .requestMatchers("/contacts/**").permitAll()
+                .requestMatchers("/data-api/**").permitAll()*/
                 .requestMatchers("/contact").permitAll()
                 .requestMatchers("/saveMsg").permitAll()
                 .requestMatchers("/courses").permitAll()
                 .requestMatchers("/displayMessages/**").hasRole("ADMIN")
                 .requestMatchers("/api/**").authenticated()
+                .requestMatchers("/data-api/**").authenticated()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/closeMsg/**").hasRole("ADMIN")
                 .requestMatchers("/displayProfile").authenticated()
@@ -51,7 +56,8 @@ public class ProjectSecurityConfig {
                 .requestMatchers("/dashboard").authenticated()
                 .anyRequest().authenticated());
         http.csrf().ignoringRequestMatchers("/saveMsg").ignoringRequestMatchers("*/public/**")
-                .ignoringRequestMatchers("/api/**");
+                .ignoringRequestMatchers("/api/**")
+                .ignoringRequestMatchers("/data-api/**");
         http.formLogin().loginPage("/login")
                 .defaultSuccessUrl("/dashboard").failureUrl("/login?error=true").permitAll()
                 .and().logout().logoutSuccessUrl("/login?logout=true").invalidateHttpSession(true).permitAll();

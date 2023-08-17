@@ -51,7 +51,7 @@ public class Contact extends BaseEntity {
 
     @NotBlank(message = "Name must not be blank")
     @Size(min = 3, message = "Name must be at least 3 characters long")
-    @JsonProperty("nome")
+    //@JsonProperty("nome")
     private String name;
 
     @NotBlank(message = "Moblie number must not be blank")
