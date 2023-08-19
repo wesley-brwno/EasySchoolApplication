@@ -1,2 +1,37 @@
 # EasySchoolApplication
-# Teste credencias
+Seguindo o curso <a href="https://www.udemy.com/course/spring-springboot-jpa-hibernate-zero-to-master/">Master Spring 6, Spring Boot 3, REST, JPA, Hibernate</a> da Eazy Bytes, o curso apresenta os seguintes tópicos e tecnologias:
+
+- O que é a estrutura do Spring?
+- Spring versus Java EE
+- Evolução do Spring e cronograma de lançamento do Spring
+- Diferentes projetos dentro do Spring
+- Conceitos centrais do Spring, como Inversão de Controle (IoC), Injeção de Dependência (DI) e Programação Orientada a Aspectos (AOP)
+- Diferentes abordagens de criação de beans na estrutura do Spring
+- Escopos de beans dentro da estrutura do Spring
+- Autoconfiguração dos Spring Beans
+- Biblioteca Lombok e anotações
+- Introdução ao padrão MVC e visão geral dos aplicativos da Web
+- Arquitetura interna do Spring MVC e como criar aplicativos da Web usando o Spring MVC e o Thymeleaf
+- Validações do Spring MVC
+- Como criar aplicativos da Web dinâmicos usando o Thymeleaf e o Spring
+- Integração do Thymeleaf com o Spring, Spring MVC e Spring Security
+- Mergulho profundo no Spring Boot, configuração automática
+- Ferramentas de desenvolvimento do Spring Boot
+- Banco de dados H2 do Spring Boot
+- Proteção de aplicativos da Web usando o Spring Security
+- Autenticação, autorização, acesso baseado em função
+- Falsificação de solicitação entre sites (CSRF) e compartilhamento de recursos entre origens (CORS)
+- Operações de criação, leitura, atualização e exclusão de banco de dados usando o Spring JDBC
+- Introdução a estruturas ORM e operações de criação, leitura, atualização e exclusão de banco de dados usando Spring Data JPA/Hibernate
+- Métodos de consulta derivada em JPA
+- Mapeamentos OneToOne, OneToMany, ManyToOne, ManyToMany dentro de JPA/Hibernate
+- Ordenação, paginação, JPQL dentro do Spring Data JPA
+- Criação de serviços Rest dentro do Spring
+- Consumo de serviços Rest usando OpenFeign, Web Client, RestTemplate
+- Spring Data Rest e HAL Explore
+- Registro em log nos aplicativos Spring
+- Configuração de propriedades dentro de aplicativos Spring
+- Perfis dentro de aplicativos Spring Boot
+- Criação condicional de beans usando perfis
+- Monitoramento de aplicativos Spring Boot usando o SpringBoot Actuator e o Spring Boot Admin
+- Implementação do aplicativo SpringBoot na nuvem usando o AWS Elastic Beanstalk
