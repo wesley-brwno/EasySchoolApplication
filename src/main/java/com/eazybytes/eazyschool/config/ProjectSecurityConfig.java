@@ -43,6 +43,7 @@ public class ProjectSecurityConfig {
                 .requestMatchers("/api/**").authenticated()
                 .requestMatchers("/data-api/**").authenticated()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/eazyschool/actuator/**").hasRole("ADMIN")
                 .requestMatchers("/closeMsg/**").hasRole("ADMIN")
                 .requestMatchers("/displayProfile").authenticated()
                 .requestMatchers("/updateProfile").authenticated()
@@ -57,7 +58,8 @@ public class ProjectSecurityConfig {
                 .anyRequest().authenticated());
         http.csrf().ignoringRequestMatchers("/saveMsg").ignoringRequestMatchers("*/public/**")
                 .ignoringRequestMatchers("/api/**")
-                .ignoringRequestMatchers("/data-api/**");
+                .ignoringRequestMatchers("/data-api/**")
+                .ignoringRequestMatchers("/eazyschol/actuator/**");
         http.formLogin().loginPage("/login")
                 .defaultSuccessUrl("/dashboard").failureUrl("/login?error=true").permitAll()
                 .and().logout().logoutSuccessUrl("/login?logout=true").invalidateHttpSession(true).permitAll();
